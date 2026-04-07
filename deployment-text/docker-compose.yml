@@ -1,0 +1,25 @@
+# =============================================================================
+# Mindspace — Text API (LightGBM, port 9000)
+# =============================================================================
+# Usage:
+#   docker compose up --build     # build and start
+#   docker compose down           # stop and remove container
+#
+# Requires a .env file in this folder with: API_KEY=your-secret-key
+# =============================================================================
+
+services:
+  text-api:
+    build: .
+    container_name: mindspace-text-api
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
