@@ -1,21 +1,26 @@
-# Mindspace Text API (Quick README)
+# Mindspace Text API
 
 FastAPI service for mental health profile classification using a trained LightGBM model.
 
-- Model: LightGBM
-- Input: 43 pre-extracted text/speech features
-- Output: predicted class + confidence + class probabilities
-- Classes: Anxiety, Bipolar_Mania, Depression, Normal, Phobia, Stress, Suicidal_Tendency
-- Default port: 9000
+- **Model**: LightGBM
+- **Input**: 43 pre-extracted text/speech features
+- **Output**: predicted class + confidence + class probabilities
+- **Classes**: Anxiety, Bipolar_Mania, Depression, Normal, Phobia, Stress, Suicidal_Tendency
+- **Default port**: 9000
 
 ## Project Files
 
-- `api_text_to_sentiment.py`: FastAPI app and inference logic
-- `pipeline_output/LightGBM_13032026_110356/`: model + preprocessing artifacts
-- `demo-api-input-data-sample/`: sample JSON payloads
-- `Dockerfile`: container build
-- `docker-compose.yml`: local container orchestration
-- `requirements.txt`: Python dependencies
+| File / Folder | Purpose |
+|---|---|
+| `api_text_to_sentiment.py` | FastAPI app — all endpoints + inference logic |
+| `call_text_api.py` | Python client script — calls all 4 endpoints for testing |
+| `pipeline_output/LightGBM_13032026_110356/` | Trained model + preprocessing artifacts |
+| `demo-api-input-data-sample/` | Sample JSON payloads (5 per class, 7 classes) |
+| `Dockerfile` | Container image build |
+| `docker-compose.yml` | Local container orchestration |
+| `requirements.txt` | Python dependencies (pinned versions) |
+| `.env` | API key (not committed — listed in `.gitignore`) |
+| `.gitignore` | Keeps `.env` and other local files out of version control |
 
 ## Prerequisites
 
@@ -32,6 +37,7 @@ API_KEY=your-secret-api-key
 ```
 
 The `/predict` and `/model/info` endpoints require this key in the `X-API-Key` header.
+The client script (`call_text_api.py`) reads the same `.env` file automatically.
 
 ## Run Locally (Python)
 
@@ -63,10 +69,10 @@ docker compose down
 
 Public service info endpoint.
 
-- Auth: Not required
-- Purpose: quick check of loaded model summary
+- **Auth**: Not required
+- **Purpose**: quick check of loaded model summary
 
-Example response (shape):
+Example response:
 
 ```json
 {
@@ -82,8 +88,8 @@ Example response (shape):
 
 Public healthcheck endpoint.
 
-- Auth: Not required
-- Purpose: readiness/liveness
+- **Auth**: Not required
+- **Purpose**: readiness/liveness probe
 
 Example response:
 
@@ -98,24 +104,24 @@ Example response:
 
 Main inference endpoint.
 
-- Auth: Required (`X-API-Key`)
-- Body: JSON object with all 43 required numeric features
-- Returns: prediction, confidence, probabilities, model, accuracy
+- **Auth**: Required (`X-API-Key` header)
+- **Body**: JSON object with all 43 required numeric features
+- **Returns**: prediction, confidence, probabilities, model, accuracy
 
-Success response (shape):
+Example response:
 
 ```json
 {
   "prediction": "Depression",
-  "confidence": 0.9412,
+  "confidence": 0.9999,
   "probabilities": {
-    "Anxiety": 0.0101,
-    "Bipolar_Mania": 0.0021,
-    "Depression": 0.9412,
-    "Normal": 0.015,
-    "Phobia": 0.0061,
-    "Stress": 0.022,
-    "Suicidal_Tendency": 0.0035
+    "Anxiety": 0.0,
+    "Bipolar_Mania": 0.0,
+    "Depression": 0.9999,
+    "Normal": 0.0,
+    "Phobia": 0.0,
+    "Stress": 0.0001,
+    "Suicidal_Tendency": 0.0
   },
   "model": "LightGBM",
   "accuracy": 0.92
@@ -132,14 +138,26 @@ Common errors:
 
 Returns full model metadata.
 
-- Auth: Required (`X-API-Key`)
-- Purpose: inspect model params and training/test metrics
+- **Auth**: Required (`X-API-Key` header)
+- **Purpose**: inspect model hyperparams, CV score, and test metrics
 
-## Predict Request Example
+## Testing the API
 
-Use any sample file from `demo-api-input-data-sample/` such as `depression_sample_1.json`.
+### Option 1: Python client script
 
-### cURL
+The easiest way to test all endpoints at once:
+
+```bash
+# Terminal 1 — start the server
+uvicorn api_text_to_sentiment:app --host 127.0.0.1 --port 9000
+
+# Terminal 2 — run the client
+python call_text_api.py
+```
+
+The script reads the API key from `.env`, calls all 4 endpoints, and prints formatted results.
+
+### Option 2: cURL
 
 ```bash
 curl -X POST "http://localhost:9000/predict" \
@@ -148,7 +166,7 @@ curl -X POST "http://localhost:9000/predict" \
   --data-binary "@demo-api-input-data-sample/depression_sample_1.json"
 ```
 
-### PowerShell
+### Option 3: PowerShell
 
 ```powershell
 $headers = @{ "X-API-Key" = "your-secret-api-key" }
@@ -166,7 +184,7 @@ Invoke-RestMethod -Uri "http://localhost:9000/predict" -Method Post -Headers $he
 ## Quick Test Flow
 
 1. Create `.env` with `API_KEY`.
-2. Start API.
-3. Open `http://localhost:9000/health` and confirm `status: ok`.
-4. Send one sample JSON to `/predict` with `X-API-Key`.
-5. Verify prediction payload is returned.
+2. Install dependencies: `pip install -r requirements.txt`.
+3. Start API: `uvicorn api_text_to_sentiment:app --host 127.0.0.1 --port 9000`.
+4. Run `python call_text_api.py` — should print all 4 endpoint results.
+5. Or open `http://localhost:9000/docs` for interactive Swagger UI.
