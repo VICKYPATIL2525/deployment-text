@@ -1,190 +1,144 @@
-# Mindspace Text API
+# Mindspace — Text Sentiment API
 
-FastAPI service for mental health profile classification using a trained LightGBM model.
+A FastAPI inference server that predicts a mental health profile from 43 pre-extracted text/speech features using a trained LightGBM model.
 
-- **Model**: LightGBM
-- **Input**: 43 pre-extracted text/speech features
-- **Output**: predicted class + confidence + class probabilities
-- **Classes**: Anxiety, Bipolar_Mania, Depression, Normal, Phobia, Stress, Suicidal_Tendency
-- **Default port**: 9000
+## What it does
 
-## Project Files
+Accepts 43 numerical features extracted from a speech or text sample and returns the most likely mental health profile out of 7 classes: `Anxiety`, `Bipolar_Mania`, `Depression`, `Normal`, `Phobia`, `Stress`, `Suicidal_Tendency`.
 
-| File / Folder | Purpose |
-|---|---|
-| `api_text_to_sentiment.py` | FastAPI app — all endpoints + inference logic |
-| `call_text_api.py` | Python client script — calls all 4 endpoints for testing |
-| `pipeline_output/LightGBM_13032026_110356/` | Trained model + preprocessing artifacts |
-| `demo-api-input-data-sample/` | Sample JSON payloads (5 per class, 7 classes) |
-| `Dockerfile` | Container image build |
-| `docker-compose.yml` | Local container orchestration |
-| `requirements.txt` | Python dependencies (pinned versions) |
-| `.env` | API key (not committed — listed in `.gitignore`) |
-| `.gitignore` | Keeps `.env` and other local files out of version control |
+## Endpoints
 
-## Prerequisites
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/` | No | Service info — name, supported classes, feature count |
+| GET | `/health` | No | Health check — returns `{"status": "ok"}` when ready |
+| POST | `/predict` | Yes | Run prediction on 43 input features |
+| GET | `/model/info` | Yes | Model structure info (feature names, classes, scaler) |
 
-- Python 3.11+
-- pip
-- Optional: Docker + Docker Compose
+## Input features
 
-## Environment Variable
+The `/predict` endpoint expects 43 float fields grouped as:
 
-Create a `.env` file in the project root:
+- **Linguistic/Semantic (19):** `overall_sentiment_score`, `semantic_coherence_score`, `self_reference_density`, `future_focus_ratio`, `positive_emotion_ratio`, `fear_word_frequency`, `sadness_word_frequency`, `negative_emotion_ratio`, `uncertainty_word_frequency`, `anger_word_frequency`, `rumination_phrase_frequency`, `filler_word_frequency`, `topic_shift_frequency`, `total_word_count`, `avg_sentence_length`, `language_model_perplexity`, `past_focus_ratio`, `repetition_rate`, `adjective_ratio`
+- **Topic model (5):** `topic_0` to `topic_4` (probability distribution, each in [0, 1])
+- **Sentence embeddings (17):** `emb_1`, `emb_3`, `emb_4`, `emb_5`, `emb_7`, `emb_8`, `emb_10`, `emb_11`, `emb_12`, `emb_14`, `emb_15`, `emb_21`, `emb_22`, `emb_25`, `emb_28`, `emb_29`, `emb_30`
+- **Language flags (2):** `language_hindi`, `language_marathi` — one-hot (0.0 or 1.0, not both 1)
 
-```env
-API_KEY=your-secret-api-key
+See `payload.json` for a complete sample input.
+
+## How to use
+
+### Prerequisites
+
+```
+pip install requests python-dotenv
 ```
 
-The `/predict` and `/model/info` endpoints require this key in the `X-API-Key` header.
-The client script (`call_text_api.py`) reads the same `.env` file automatically.
+### Call with Python `requests`
 
-## Run Locally (Python)
+```python
+import requests
+
+url = "http://localhost:9000/predict"
+
+payload = {
+    "overall_sentiment_score": -0.277664,
+    "semantic_coherence_score": 0.811103,
+    "self_reference_density": 0.075388,
+    "future_focus_ratio": 0.152573,
+    "positive_emotion_ratio": 0.05661,
+    "fear_word_frequency": 0.020899,
+    "sadness_word_frequency": 0.018766,
+    "negative_emotion_ratio": 0.11364,
+    "uncertainty_word_frequency": 0.015442,
+    "anger_word_frequency": 0.011136,
+    "rumination_phrase_frequency": 0.036132,
+    "filler_word_frequency": 0.17825,
+    "topic_shift_frequency": 0.742109,
+    "total_word_count": 381.0,
+    "avg_sentence_length": 11.134937,
+    "language_model_perplexity": 129.701744,
+    "past_focus_ratio": 0.305773,
+    "repetition_rate": 0.100095,
+    "adjective_ratio": 0.066824,
+    "topic_0": 0.298104,
+    "topic_1": 0.513306,
+    "topic_2": 0.024847,
+    "topic_3": 0.110643,
+    "topic_4": 0.053101,
+    "emb_1": -0.102718,
+    "emb_3": -0.945314,
+    "emb_4": -0.880676,
+    "emb_5": -1.080255,
+    "emb_7": -1.284114,
+    "emb_8": 1.158825,
+    "emb_10": 1.00407,
+    "emb_11": -0.827109,
+    "emb_12": 1.572154,
+    "emb_14": 0.567563,
+    "emb_15": 0.01696,
+    "emb_21": -0.615925,
+    "emb_22": -1.951899,
+    "emb_25": 0.637446,
+    "emb_28": 0.57704,
+    "emb_29": 0.01438,
+    "emb_30": -2.41189,
+    "language_hindi": 0.0,
+    "language_marathi": 0.0
+}
+
+headers = {
+    "X-API-Key": "your_api_key"
+}
+
+response = requests.post(url, json=payload, headers=headers)
+print(response.json())
+```
+
+### Ready-to-run script
 
 ```bash
-pip install -r requirements.txt
-uvicorn api_text_to_sentiment:app --host 0.0.0.0 --port 9000 --reload
+python test_predict_api.py
 ```
 
-Open docs:
+`test_predict_api.py` reads `payload.json`, calls `/predict`, and prints the result. Requires `.env` with `MINDSPACE_TEXT_API_KEY` set.
 
-- Swagger UI: http://localhost:9000/docs
-- ReDoc: http://localhost:9000/redoc
+## Setup
 
-## Run with Docker Compose
+### 1. Configure environment
+
+```bash
+cp example.env .env
+# Edit .env and set MINDSPACE_TEXT_API_KEY to your key
+```
+
+### 2. Run with Docker (recommended)
 
 ```bash
 docker compose up --build
 ```
 
-Stop:
+### 3. Run locally
 
 ```bash
-docker compose down
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 9000
 ```
 
-## Endpoints
+Interactive docs available at `http://localhost:9000/docs`.
 
-### 1) GET /
+## File structure
 
-Public service info endpoint.
-
-- **Auth**: Not required
-- **Purpose**: quick check of loaded model summary
-
-Example response:
-
-```json
-{
-  "service": "Mindspace Mental Health Classifier",
-  "model": "LightGBM",
-  "accuracy": 0.92,
-  "classes": ["Anxiety", "Bipolar_Mania", "Depression", "Normal", "Phobia", "Stress", "Suicidal_Tendency"],
-  "n_features": 43
-}
 ```
-
-### 2) GET /health
-
-Public healthcheck endpoint.
-
-- **Auth**: Not required
-- **Purpose**: readiness/liveness probe
-
-Example response:
-
-```json
-{
-  "status": "ok",
-  "artifacts_loaded": true
-}
+deployment-text/
+├── main.py               # FastAPI application
+├── requirements.txt      # Python dependencies
+├── Dockerfile            # Docker image definition
+├── docker-compose.yml    # Single-service compose file
+├── payload.json          # Sample input for /predict
+├── output.json           # Sample output from /predict
+├── test_predict_api.py   # Ready-to-run test script
+├── example.env           # Environment variable template
+├── .env                  # Your actual keys (never commit this)
+└── pipeline_output/      # Trained model artifacts
 ```
-
-### 3) POST /predict
-
-Main inference endpoint.
-
-- **Auth**: Required (`X-API-Key` header)
-- **Body**: JSON object with all 43 required numeric features
-- **Returns**: prediction, confidence, probabilities, model, accuracy
-
-Example response:
-
-```json
-{
-  "prediction": "Depression",
-  "confidence": 0.9999,
-  "probabilities": {
-    "Anxiety": 0.0,
-    "Bipolar_Mania": 0.0,
-    "Depression": 0.9999,
-    "Normal": 0.0,
-    "Phobia": 0.0,
-    "Stress": 0.0001,
-    "Suicidal_Tendency": 0.0
-  },
-  "model": "LightGBM",
-  "accuracy": 0.92
-}
-```
-
-Common errors:
-
-- `403`: missing/invalid API key
-- `422`: validation/preprocessing error in request body
-- `500`: inference failure
-
-### 4) GET /model/info
-
-Returns full model metadata.
-
-- **Auth**: Required (`X-API-Key` header)
-- **Purpose**: inspect model hyperparams, CV score, and test metrics
-
-## Testing the API
-
-### Option 1: Python client script
-
-The easiest way to test all endpoints at once:
-
-```bash
-# Terminal 1 — start the server
-uvicorn api_text_to_sentiment:app --host 127.0.0.1 --port 9000
-
-# Terminal 2 — run the client
-python call_text_api.py
-```
-
-The script reads the API key from `.env`, calls all 4 endpoints, and prints formatted results.
-
-### Option 2: cURL
-
-```bash
-curl -X POST "http://localhost:9000/predict" \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: your-secret-api-key" \
-  --data-binary "@demo-api-input-data-sample/depression_sample_1.json"
-```
-
-### Option 3: PowerShell
-
-```powershell
-$headers = @{ "X-API-Key" = "your-secret-api-key" }
-$body = Get-Content .\demo-api-input-data-sample\depression_sample_1.json -Raw
-Invoke-RestMethod -Uri "http://localhost:9000/predict" -Method Post -Headers $headers -ContentType "application/json" -Body $body
-```
-
-## Required Input Notes
-
-- All 43 fields are required.
-- `language_hindi` and `language_marathi` must be `0.0` or `1.0`.
-- Topic weights (`topic_0` to `topic_4`) must be in `[0, 1]`.
-- Typical shape is easiest to follow from sample JSON files in `demo-api-input-data-sample/`.
-
-## Quick Test Flow
-
-1. Create `.env` with `API_KEY`.
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Start API: `uvicorn api_text_to_sentiment:app --host 127.0.0.1 --port 9000`.
-4. Run `python call_text_api.py` — should print all 4 endpoint results.
-5. Or open `http://localhost:9000/docs` for interactive Swagger UI.

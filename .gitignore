@@ -1,1 +1,15 @@
+# Environment
 .env
+
+# Logs
+logs/
+*.log
+*.log.err
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Runtime output
+output.json

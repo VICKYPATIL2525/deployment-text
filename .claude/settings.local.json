@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import ast; ast.parse\\(open\\('C:/Users/vicky/OneDrive/Desktop/deployment-text/main.py'\\).read\\(\\)\\); print\\('TEXT: syntax OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('C:/Users/vicky/OneDrive/Desktop/deployment-voice/main.py'\\).read\\(\\)\\); print\\('VOICE: syntax OK'\\)\")",
+      "Bash(mkdir -p \"C:/Users/vicky/OneDrive/Desktop/deployment-text/logs\")",
+      "Bash(mv \"C:/Users/vicky/OneDrive/Desktop/deployment-text/server.log\" \"C:/Users/vicky/OneDrive/Desktop/deployment-text/logs/\")",
+      "Bash(mv \"C:/Users/vicky/OneDrive/Desktop/deployment-text/server.err.log\" \"C:/Users/vicky/OneDrive/Desktop/deployment-text/logs/\")",
+      "Bash(mv \"C:/Users/vicky/OneDrive/Desktop/deployment-text/text_api.log\" \"C:/Users/vicky/OneDrive/Desktop/deployment-text/logs/\")",
+      "Bash(mv \"C:/Users/vicky/OneDrive/Desktop/deployment-text/text_api.log.err\" \"C:/Users/vicky/OneDrive/Desktop/deployment-text/logs/\")",
+      "Bash(mkdir -p \"C:/Users/vicky/OneDrive/Desktop/deployment-voice/logs\")",
+      "Bash(mv \"C:/Users/vicky/OneDrive/Desktop/deployment-voice/server.log\" \"C:/Users/vicky/OneDrive/Desktop/deployment-voice/logs/\")",
+      "Bash(mv \"C:/Users/vicky/OneDrive/Desktop/deployment-voice/server.err.log\" \"C:/Users/vicky/OneDrive/Desktop/deployment-voice/logs/\")",
+      "Bash(touch \"C:/Users/vicky/OneDrive/Desktop/deployment-text/logs/.gitkeep\")",
+      "Bash(touch \"C:/Users/vicky/OneDrive/Desktop/deployment-voice/logs/.gitkeep\")",
+      "Bash(curl *)",
+      "Bash(uvicorn main:app --host 0.0.0.0 --port 9000)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(pip show *)",
+      "Bash(pip3 show *)",
+      "Read(//c/Users/vicky/AppData/Local/Programs/Python/**)",
+      "Bash(where python *)",
+      "Bash(pip install *)",
+      "Bash(python -c ' *)",
+      "PowerShell(Get-Process | Where-Object { $_.Name -match \"python|uvicorn\" } | Select-Object Id, Name, CommandLine | Format-Table -AutoSize)"
+    ]
+  }
+}
