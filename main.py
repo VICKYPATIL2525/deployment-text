@@ -34,7 +34,7 @@ def verify_api_key(key: str = Security(_api_key_header)) -> None:
 
 
 # ─── Artifact paths ───────────────────────────────────────────────────────────
-ARTIFACTS_DIR = Path(__file__).parent / "pipeline_output" / "LightGBM_13032026_110356"
+ARTIFACTS_DIR = Path(__file__).parent / "pipeline_output" / "LightGBM_06-May-2026_18-04-07"
 
 artifacts: dict = {}
 
