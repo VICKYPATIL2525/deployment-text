@@ -23,8 +23,10 @@ MINDSPACE_TEXT_API_KEY : (required) shared secret key for API access.
 """
 
 import json
+import logging
 import os
 import sys
+import traceback
 import uuid
 import numpy as np
 import pandas as pd
@@ -38,6 +40,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel, field_validator
+
+# ─── Logging setup ────────────────────────────────────────────────────────────
+# Writes structured lines to stdout so Docker / gunicorn capture them naturally.
+# Format: timestamp | level | message
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    stream=sys.stdout,
+)
+logger = logging.getLogger(__name__)
 
 load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
@@ -91,6 +104,7 @@ def load_artifacts() -> None:
     Any exception raised by ``joblib.load`` or file I/O is intentionally
     propagated so the caller (``lifespan``) can abort startup.
     """
+    logger.info("Loading model artifacts from %s", ARTIFACTS_DIR)
     artifacts["model"]                = joblib.load(ARTIFACTS_DIR / "best_model.joblib")
     artifacts["scaler"]               = joblib.load(ARTIFACTS_DIR / "scaler.joblib")
     artifacts["label_encoder"]        = joblib.load(ARTIFACTS_DIR / "label_encoder.joblib")
@@ -98,6 +112,10 @@ def load_artifacts() -> None:
     artifacts["outlier_transformers"] = joblib.load(ARTIFACTS_DIR / "outlier_transformers.joblib")
     artifacts["feature_names"]        = json.loads((ARTIFACTS_DIR / "feature_names.json").read_text())
     artifacts["metadata"]             = json.loads((ARTIFACTS_DIR / "model_metadata.json").read_text())
+    logger.info("All artifacts loaded — model: %s, features: %d, classes: %s",
+                artifacts["metadata"].get("best_model_name"),
+                artifacts["metadata"].get("n_features"),
+                artifacts["metadata"].get("class_names"))
 
 
 @asynccontextmanager
@@ -114,15 +132,18 @@ async def lifespan(app: FastAPI):
     try:
         load_artifacts()
     except Exception as e:
-        print(f"FATAL: Failed to load model artifacts — {e}", file=sys.stderr)
+        # Log the full traceback so the root cause is visible in container logs.
+        logger.critical("Failed to load model artifacts — %s\n%s", e, traceback.format_exc())
         sys.exit(1)
 
     # Refuse to start if the API key is not configured.
     if not _get_api_key():
-        print("FATAL: MINDSPACE_TEXT_API_KEY is not set in the environment.", file=sys.stderr)
+        logger.critical("MINDSPACE_TEXT_API_KEY is not set in the environment.")
         sys.exit(1)
 
+    logger.info("Startup complete — API is ready to serve requests.")
     yield
+    logger.info("Shutting down.")
 
 
 # ─── App ──────────────────────────────────────────────────────────────────────
@@ -147,36 +168,22 @@ class PredictRequest(BaseModel):
     """
     Input schema for ``POST /predict``.
 
-    Contains 52 numeric features derived from speech or text analysis,
-    split into two groups:
-
-    * **Required (28)** — the exact features the LightGBM model was trained on;
-      all must be present in every request.
-    * **Optional (24)** — additional pipeline outputs accepted for forward
-      compatibility but not forwarded to the model (set to ``None`` if absent).
+    Contains the 28 numeric features the LightGBM model was trained on.
+    All fields are required.
 
     Validation rules
     ----------------
     * All ratio / proportion fields are validated to ``[0, 1]``.
     * ``overall_sentiment_score`` is validated to ``[-1, 1]``.
     * ``sentiment_trajectory_slope`` accepts any finite real number.
-    * Count-based fields are validated to be strictly positive (> 0).
-    * ``negative_emotion_spike_count`` and ``sentiment_variance`` must be
-      non-negative (>= 0).
+    * ``sentence_count`` and structural depth fields must be strictly positive (> 0).
+    * ``negative_emotion_spike_count`` must be non-negative (>= 0).
     * All fields are checked to be finite (no ``inf`` / ``nan``).
     """
     # ── Lexical / surface features ────────────────────────────────────────────
-    # Required (used by model)
     hapax_legoman_ratio: float                          # once-occurring word ratio [0, 1]
-    # Optional (not used by model)
-    total_word_count: float | None = None               # total words in sample (> 0)
-    unique_word_count: float | None = None              # distinct word count (> 0)
-    type_token_ratio_ttr: float | None = None           # unique/total words [0, 1]
-    moving_average_ttr: float | None = None             # moving-window TTR [0, 1]
-    repetition_rate: float | None = None                # word/phrase repetition ratio [0, 1]
 
     # ── Syntactic features ────────────────────────────────────────────────────
-    # Required
     sentence_count: float                               # number of sentences (> 0)
     average_sentence_length: float                      # avg words per sentence (> 0)
     noun_ratio: float                                   # noun proportion [0, 1]
@@ -185,19 +192,12 @@ class PredictRequest(BaseModel):
     first_person_singular_pronoun_frequency: float      # I/me/my ratio [0, 1]
     modal_verb_frequency: float                         # modal verb ratio [0, 1]
     negative_frequency: float                           # negation word ratio [0, 1]
-    # Optional
-    adjective_ratio: float | None = None                # adjective proportion [0, 1]
 
     # ── Deep syntactic features ───────────────────────────────────────────────
-    # Required
     parse_tree_depth: float                             # avg parse tree depth (> 0)
     subordinate_clause_ratio: float                     # subordinate clause ratio [0, 1]
-    # Optional
-    avg_dependency_length: float | None = None          # avg dependency arc length (> 0)
-    clause_count: float | None = None                   # number of clauses (> 0)
 
     # ── Sentiment / emotion features ──────────────────────────────────────────
-    # Required
     overall_sentiment_score: float                      # tanh(pos - neg) [-1, 1]
     fear_word_frequency: float                          # fear word ratio [0, 1]
     sadness_word_frequency: float                       # sadness word ratio [0, 1]
@@ -205,51 +205,24 @@ class PredictRequest(BaseModel):
     max_negative_emotion: float                         # peak negative emotion score [0, 1]
     negative_emotion_spike_count: float                 # count of negative spikes (>= 0)
     sentiment_trajectory_slope: float                   # slope of sentiment over time (any real)
-    # Optional
-    positive_emotion_word_ratio: float | None = None    # positive word ratio [0, 1]
-    negative_emotion_word_ratio: float | None = None    # negative word ratio [0, 1]
-    joy_frequency: float | None = None                  # joy word ratio [0, 1]
-    disgust_frequency: float | None = None              # disgust word ratio [0, 1]
-    surprise_frequency: float | None = None             # surprise word ratio [0, 1]
-    emotional_intensity_ratio: float | None = None      # overall emotional intensity [0, 1]
-    sentiment_variance: float | None = None             # variance in sentiment scores (>= 0)
 
     # ── Emotional dynamics ────────────────────────────────────────────────────
-    # Required
     emotional_volatility_score: float                   # volatility of emotion [0, 1]
 
-    # ── Coherence / discourse features ────────────────────────────────────────
-    # Optional (none used by model)
-    semantic_coherence_score: float | None = None       # sentence coherence [0, 1]
-    topic_shift_frequency: float | None = None          # topic entropy [0, 1]
-    max_sentence_similarity: float | None = None        # max pairwise sentence sim [0, 1]
-    first_last_sentence_similarity: float | None = None # first vs last sentence sim [0, 1]
-
     # ── Psychological / cognitive features ────────────────────────────────────
-    # Required
     absolutist_word_frequency: float                    # absolutist word ratio [0, 1]
     catastrophizing_indicators: float                   # catastrophizing score [0, 1]
     external_locus_of_control_score: float              # external LoC score [0, 1]
     uncertainty_word_frequency: float                   # uncertainty word ratio [0, 1]
     avoidance_language_frequency: float                 # avoidance language ratio [0, 1]
-    # Optional
-    helplessness_phrase_frequency: float | None = None  # helplessness phrase ratio [0, 1]
-    rumination_phrase_frequency: float | None = None    # rumination ratio [0, 1]
-    threat_anticipation_language: float | None = None   # threat anticipation ratio [0, 1]
 
     # ── Temporal focus features ───────────────────────────────────────────────
-    # Required
     past_focused_word_ratio: float                      # past-tense ratio [0, 1]
     present_focused_word_ratio: float                   # present-tense ratio [0, 1]
     future_focused_word_ratio: float                    # future-tense ratio [0, 1]
-    # Optional
-    self_reference_density: float | None = None         # first-person pronoun density [0, 1]
 
     # ── Miscellaneous ─────────────────────────────────────────────────────────
-    # Required
     cognitive_load_score: float                         # cognitive load index (> 0)
-    # Optional
-    filler_word_frequency: float | None = None          # filler word ratio [0, 1]
 
     # ── Validators ───────────────────────────────────────────────────────────
 
@@ -270,7 +243,6 @@ class PredictRequest(BaseModel):
         return v
 
     @field_validator(
-        # required unit ratios
         "hapax_legoman_ratio", "noun_ratio", "verb_ratio", "adverb_ratio",
         "first_person_singular_pronoun_frequency", "modal_verb_frequency", "negative_frequency",
         "subordinate_clause_ratio",
@@ -280,56 +252,20 @@ class PredictRequest(BaseModel):
         "external_locus_of_control_score", "uncertainty_word_frequency",
         "avoidance_language_frequency",
         "past_focused_word_ratio", "present_focused_word_ratio", "future_focused_word_ratio",
-        # optional unit ratios
-        "type_token_ratio_ttr", "moving_average_ttr", "repetition_rate", "adjective_ratio",
-        "positive_emotion_word_ratio", "negative_emotion_word_ratio",
-        "joy_frequency", "disgust_frequency", "surprise_frequency", "emotional_intensity_ratio",
-        "semantic_coherence_score", "topic_shift_frequency",
-        "max_sentence_similarity", "first_last_sentence_similarity",
-        "helplessness_phrase_frequency", "rumination_phrase_frequency",
-        "threat_anticipation_language", "self_reference_density", "filler_word_frequency",
     )
     @classmethod
-    def validate_unit_ratios(cls, v: float | None) -> float | None:
+    def validate_unit_ratios(cls, v: float) -> float:
         """Ensure ratio / proportion fields are finite and lie in ``[0, 1]``."""
-        if v is None:
-            return v
         if not np.isfinite(v):
             raise ValueError(f"Expected a finite number, got {v}")
         if not 0.0 <= v <= 1.0:
             raise ValueError(f"Expected value in [0, 1], got {v}")
         return v
 
-    @field_validator("total_word_count", "unique_word_count")
-    @classmethod
-    def validate_word_counts(cls, v: float | None) -> float | None:
-        """Ensure word counts are finite, positive, and below a sanity ceiling of 10 000."""
-        if v is None:
-            return v
-        if not np.isfinite(v):
-            raise ValueError(f"Expected a finite number, got {v}")
-        if v <= 0:
-            raise ValueError(f"Word count must be positive, got {v}")
-        if v > 10000:
-            raise ValueError(f"Word count suspiciously high ({v}), expected < 10000")
-        return v
-
     @field_validator("sentence_count")
     @classmethod
     def validate_counts(cls, v: float) -> float:
         """Ensure ``sentence_count`` is finite and strictly positive."""
-        if not np.isfinite(v):
-            raise ValueError(f"Expected a finite number, got {v}")
-        if v <= 0:
-            raise ValueError(f"Count must be positive, got {v}")
-        return v
-
-    @field_validator("clause_count")
-    @classmethod
-    def validate_clause_count(cls, v: float | None) -> float | None:
-        """Ensure the optional ``clause_count`` is finite and strictly positive when provided."""
-        if v is None:
-            return v
         if not np.isfinite(v):
             raise ValueError(f"Expected a finite number, got {v}")
         if v <= 0:
@@ -346,34 +282,10 @@ class PredictRequest(BaseModel):
             raise ValueError(f"Expected non-negative value, got {v}")
         return v
 
-    @field_validator("sentiment_variance")
-    @classmethod
-    def validate_sentiment_variance(cls, v: float | None) -> float | None:
-        """Ensure the optional ``sentiment_variance`` is finite and non-negative when provided."""
-        if v is None:
-            return v
-        if not np.isfinite(v):
-            raise ValueError(f"Expected a finite number, got {v}")
-        if v < 0:
-            raise ValueError(f"Expected non-negative value, got {v}")
-        return v
-
     @field_validator("average_sentence_length", "parse_tree_depth")
     @classmethod
     def validate_positive_continuous(cls, v: float) -> float:
         """Ensure continuous structural features are finite and strictly positive."""
-        if not np.isfinite(v):
-            raise ValueError(f"Expected a finite number, got {v}")
-        if v <= 0:
-            raise ValueError(f"Expected positive value, got {v}")
-        return v
-
-    @field_validator("avg_dependency_length")
-    @classmethod
-    def validate_avg_dep_length(cls, v: float | None) -> float | None:
-        """Ensure the optional ``avg_dependency_length`` is finite and strictly positive when provided."""
-        if v is None:
-            return v
         if not np.isfinite(v):
             raise ValueError(f"Expected a finite number, got {v}")
         if v <= 0:
@@ -466,8 +378,7 @@ def preprocess(raw: dict) -> pd.DataFrame:
 
     Steps
     -----
-    1. Extract the 28 model features in canonical order from *raw*
-       (optional / extra fields in *raw* are silently ignored).
+    1. Extract the 28 model features in canonical order from *raw*.
     2. Apply per-feature outlier transforms via
        ``apply_outlier_transforms_numpy``.
     3. Apply the fitted ``RobustScaler``.
@@ -530,8 +441,8 @@ def predict(request: PredictRequest, _: None = Security(verify_api_key)):
     """
     Predict the mental health profile for a single text / speech sample.
 
-    Accepts the 52-field ``PredictRequest`` body (28 required model features
-    + 24 optional extra fields).  Returns a ``PredictResponse`` containing:
+    Accepts the 28-field ``PredictRequest`` body (all fields required).
+    Returns a ``PredictResponse`` containing:
 
     * ``prediction``    — the top predicted class label.
     * ``confidence``    — probability of that class (0–1, 4 d.p.).
@@ -542,6 +453,9 @@ def predict(request: PredictRequest, _: None = Security(verify_api_key)):
         raw = request.model_dump()
         X = preprocess(raw)
     except Exception as e:
+        # Log server-side so preprocessing bugs are visible in container logs,
+        # not just as a 422 response the caller sees.
+        logger.error("Preprocessing failed — %s\n%s", e, traceback.format_exc())
         raise HTTPException(status_code=422, detail={"error": "preprocessing_failed", "message": str(e)})
 
     try:
@@ -556,14 +470,23 @@ def predict(request: PredictRequest, _: None = Security(verify_api_key)):
         class_names   = le.classes_.tolist()
         probabilities = {cls: round(float(p), 4) for cls, p in zip(class_names, proba)}
 
+        prediction_id = str(uuid.uuid4())
+
+        # Audit log — one line per prediction for tracing and monitoring.
+        logger.info("prediction_id=%s prediction=%s confidence=%.4f",
+                    prediction_id, pred_label, confidence)
+
         return PredictResponse(
-            prediction_id=str(uuid.uuid4()),
+            prediction_id=prediction_id,
             prediction=pred_label,
             confidence=round(confidence, 4),
             probabilities=probabilities,
             model_name=artifacts.get("metadata", {}).get("best_model_name", "unknown"),
         )
     except Exception as e:
+        # Log the full traceback — a 500 here means a bug in inference code,
+        # not a bad request, so we need the stack trace to debug it.
+        logger.error("Prediction failed — %s\n%s", e, traceback.format_exc())
         raise HTTPException(status_code=500, detail={"error": "prediction_failed", "message": str(e)})
 
 
