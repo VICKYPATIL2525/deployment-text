@@ -1,0 +1,1019 @@
+{
+  "run_at": "2026-05-13T12:16:22.649089",
+  "host": "http://127.0.0.1:9000",
+  "payload": {
+    "hapax_legoman_ratio": 0.2733881557463085,
+    "sentence_count": 50.0,
+    "average_sentence_length": 10.13088822157576,
+    "noun_ratio": 0.2010433926941503,
+    "verb_ratio": 0.0891895122582851,
+    "adverb_ratio": 0.0528347641887618,
+    "first_person_singular_pronoun_frequency": 0.0357185828148079,
+    "modal_verb_frequency": 0.0036237640254603,
+    "negative_frequency": 0.0222121173189971,
+    "parse_tree_depth": 2.753431490434164,
+    "subordinate_clause_ratio": 0.4260911530885564,
+    "overall_sentiment_score": -0.2117844639861523,
+    "fear_word_frequency": 0.9908175714890286,
+    "sadness_word_frequency": 0.3911567305804755,
+    "anger_word_frequency": 0.3270672886595985,
+    "max_negative_emotion": 0.9908175714890286,
+    "negative_emotion_spike_count": 4.0,
+    "sentiment_trajectory_slope": 0.0032195575400644,
+    "emotional_volatility_score": 0.5271271296377219,
+    "absolutist_word_frequency": 0.2527975664558533,
+    "catastrophizing_indicators": 0.5012705822338291,
+    "external_locus_of_control_score": 0.0580030558664698,
+    "uncertainty_word_frequency": 0.5176753245250928,
+    "avoidance_language_frequency": 0.5093051804238442,
+    "past_focused_word_ratio": 0.1505030465412894,
+    "present_focused_word_ratio": 0.5681575341981052,
+    "future_focused_word_ratio": 0.0841749657571105,
+    "cognitive_load_score": 27.782993233610537
+  },
+  "results": {
+    "GET /  \u2014 service info": {
+      "status_code": 200,
+      "elapsed_ms": 19.24,
+      "response": {
+        "service": "Mindspace Mental Health Classifier",
+        "status": "running",
+        "classes": [
+          "ANXIETY",
+          "BIPOLAR",
+          "DEPRESSION",
+          "PHOBIA",
+          "SUICIDAL_TENDENCY"
+        ],
+        "n_features": 28
+      }
+    },
+    "GET /health  \u2014 health check (no auth)": {
+      "status_code": 200,
+      "elapsed_ms": 14.61,
+      "response": {
+        "status": "ok",
+        "model": "LightGBM",
+        "artifacts_loaded": 7
+      }
+    },
+    "POST /predict  \u2014 prediction (run 1/50)": {
+      "status_code": 200,
+      "elapsed_ms": 10.88,
+      "response": {
+        "prediction_id": "ced35f71-276f-4082-b5bd-43dc29d88206",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 2/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.53,
+      "response": {
+        "prediction_id": "73608ad1-b529-4190-ae80-66404e3a12ed",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 3/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.36,
+      "response": {
+        "prediction_id": "af4712db-1d95-45f3-81f9-f3a3fd13ee20",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 4/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.3,
+      "response": {
+        "prediction_id": "30815159-aa2e-4cc1-ae60-4bad62a3f7b2",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 5/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.42,
+      "response": {
+        "prediction_id": "dcddbb44-dfe6-428a-9115-fb0fc199cc8e",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 6/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.75,
+      "response": {
+        "prediction_id": "d3c12baa-e4ba-4f9f-b793-c50c16190b64",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 7/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.78,
+      "response": {
+        "prediction_id": "09c276a4-6d35-4977-8ac3-387344203b49",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 8/50)": {
+      "status_code": 200,
+      "elapsed_ms": 32.0,
+      "response": {
+        "prediction_id": "9ba534cc-5664-4897-8ce4-6c97ac02f7b4",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 9/50)": {
+      "status_code": 200,
+      "elapsed_ms": 12.46,
+      "response": {
+        "prediction_id": "118ce627-f044-4c6c-bc35-88e8a318834e",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 10/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.39,
+      "response": {
+        "prediction_id": "6d1d41b1-6ea9-4aee-9048-449cf88c27d5",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 11/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.35,
+      "response": {
+        "prediction_id": "8345f669-2586-4e8f-93a5-d0d4f48c3fce",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 12/50)": {
+      "status_code": 200,
+      "elapsed_ms": 12.89,
+      "response": {
+        "prediction_id": "855d1936-fe74-4309-9d37-2bab438c2dd8",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 13/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.44,
+      "response": {
+        "prediction_id": "000bf6b6-94e9-4b46-a3ee-65919d4689a3",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 14/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.33,
+      "response": {
+        "prediction_id": "a01e2008-2e64-4518-8a6a-79949ac4b981",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 15/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.59,
+      "response": {
+        "prediction_id": "e62e3a33-76fe-49fc-b63d-95a06aedfecb",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 16/50)": {
+      "status_code": 200,
+      "elapsed_ms": 28.91,
+      "response": {
+        "prediction_id": "775cb263-6bb6-48e6-b0a8-647336bbede6",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 17/50)": {
+      "status_code": 200,
+      "elapsed_ms": 12.51,
+      "response": {
+        "prediction_id": "636031e0-75d3-4e10-96f4-475a65379d99",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 18/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.62,
+      "response": {
+        "prediction_id": "0abb38d3-297c-48fe-bb89-8e5dde286a0f",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 19/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.6,
+      "response": {
+        "prediction_id": "8a42c036-a693-4349-88d9-7e95714e0d0c",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 20/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.34,
+      "response": {
+        "prediction_id": "023b0be8-5414-4ed1-b7ab-b58e6a12505c",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 21/50)": {
+      "status_code": 200,
+      "elapsed_ms": 16.71,
+      "response": {
+        "prediction_id": "41f198aa-7da2-4c50-bef4-61ab5790358b",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 22/50)": {
+      "status_code": 200,
+      "elapsed_ms": 15.2,
+      "response": {
+        "prediction_id": "5b49ad26-62fc-4a58-9631-82b7101cb37a",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 23/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.2,
+      "response": {
+        "prediction_id": "ed8833d2-79e4-4ce3-99e6-6068b42da09b",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 24/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.4,
+      "response": {
+        "prediction_id": "9f6157d9-98af-4714-a1c4-57cd302d06e9",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 25/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.42,
+      "response": {
+        "prediction_id": "188ce840-e515-4415-9f25-ff479f0fc45c",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 26/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.01,
+      "response": {
+        "prediction_id": "e3d6b950-f235-48e1-b43d-21ed54e8c029",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 27/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.94,
+      "response": {
+        "prediction_id": "ce1d169d-304e-48b8-a64b-5ec42d1786da",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 28/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.6,
+      "response": {
+        "prediction_id": "365519df-38cc-4ee3-bb46-0a5c158e0f9c",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 29/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.08,
+      "response": {
+        "prediction_id": "a0116828-cdff-4baf-bd46-acdbc22ce5ec",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 30/50)": {
+      "status_code": 200,
+      "elapsed_ms": 12.67,
+      "response": {
+        "prediction_id": "ea51e7f7-b804-4b7a-9982-7f4273711661",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 31/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.88,
+      "response": {
+        "prediction_id": "acf920b9-63a8-46b0-bb08-47d8a035c2bd",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 32/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.22,
+      "response": {
+        "prediction_id": "cb049f52-fc4f-45ba-b71a-6c472bfe63d5",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 33/50)": {
+      "status_code": 200,
+      "elapsed_ms": 12.59,
+      "response": {
+        "prediction_id": "9c034e54-347a-47d2-8194-10ec8de75327",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 34/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.85,
+      "response": {
+        "prediction_id": "b4fa59bd-77b2-4179-92b0-c25677d49794",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 35/50)": {
+      "status_code": 200,
+      "elapsed_ms": 17.52,
+      "response": {
+        "prediction_id": "2c67a4e6-e01c-4837-ad73-7b42170562e1",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 36/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.68,
+      "response": {
+        "prediction_id": "f63cb0d1-74e9-40b7-a64d-e6ee567d7ca3",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 37/50)": {
+      "status_code": 200,
+      "elapsed_ms": 18.15,
+      "response": {
+        "prediction_id": "09b96809-e06b-44a4-9cd7-acfdf233ceeb",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 38/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.69,
+      "response": {
+        "prediction_id": "ff4dec7e-9b57-4b65-abe6-bc3e4bdbf857",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 39/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.74,
+      "response": {
+        "prediction_id": "f58e87fc-6d00-4d7d-b7aa-666c99b37948",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 40/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.56,
+      "response": {
+        "prediction_id": "42b227fa-cd2a-466e-ac48-b4839e41add7",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 41/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.11,
+      "response": {
+        "prediction_id": "e749cc2f-c567-4706-bf0e-7c0697f2a641",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 42/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.55,
+      "response": {
+        "prediction_id": "f8cc988b-e562-49bb-a669-7a63ecca1de2",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 43/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.98,
+      "response": {
+        "prediction_id": "f722ab41-1f06-43d1-83be-e0ad9fc7647b",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 44/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.1,
+      "response": {
+        "prediction_id": "1cb14a8f-72be-49eb-82db-6cc3bafc6d18",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 45/50)": {
+      "status_code": 200,
+      "elapsed_ms": 15.29,
+      "response": {
+        "prediction_id": "11a68f27-9cd1-4eec-8971-af7660479a67",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 46/50)": {
+      "status_code": 200,
+      "elapsed_ms": 17.1,
+      "response": {
+        "prediction_id": "9cda1db9-e52b-4c8c-8bbb-09ed7b28ec71",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 47/50)": {
+      "status_code": 200,
+      "elapsed_ms": 14.86,
+      "response": {
+        "prediction_id": "2c9358a4-4b78-49ad-8be5-39513da7c593",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 48/50)": {
+      "status_code": 200,
+      "elapsed_ms": 13.19,
+      "response": {
+        "prediction_id": "5e6cdb46-0b86-4047-a5c5-430b0b029985",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 49/50)": {
+      "status_code": 200,
+      "elapsed_ms": 15.45,
+      "response": {
+        "prediction_id": "1d7a3681-c61d-42c3-913f-bc9a21cae4c3",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 prediction (run 50/50)": {
+      "status_code": 200,
+      "elapsed_ms": 15.4,
+      "response": {
+        "prediction_id": "08627307-fdf7-4624-b7ef-9d02db4dbd2f",
+        "prediction": "ANXIETY",
+        "confidence": 0.7971,
+        "probabilities": {
+          "ANXIETY": 0.7971,
+          "BIPOLAR": 0.0025,
+          "DEPRESSION": 0.0025,
+          "PHOBIA": 0.1956,
+          "SUICIDAL_TENDENCY": 0.0024
+        },
+        "model_name": "LightGBM"
+      }
+    },
+    "POST /predict  \u2014 summary": {
+      "n_runs": 50,
+      "min_ms": 10.88,
+      "max_ms": 32.0,
+      "avg_ms": 14.77,
+      "cold_ms": 10.88,
+      "warm_ms": 15.4,
+      "consistent_prediction": true,
+      "prediction": "ANXIETY",
+      "all_times_ms": [
+        10.88,
+        13.53,
+        13.36,
+        14.3,
+        14.42,
+        13.75,
+        13.78,
+        32.0,
+        12.46,
+        13.39,
+        14.35,
+        12.89,
+        14.44,
+        13.33,
+        13.59,
+        28.91,
+        12.51,
+        14.62,
+        14.6,
+        13.34,
+        16.71,
+        15.2,
+        13.2,
+        13.4,
+        14.42,
+        14.01,
+        14.94,
+        13.6,
+        14.08,
+        12.67,
+        14.88,
+        13.22,
+        12.59,
+        13.85,
+        17.52,
+        14.68,
+        18.15,
+        13.69,
+        13.74,
+        13.56,
+        14.11,
+        13.55,
+        13.98,
+        13.1,
+        15.29,
+        17.1,
+        14.86,
+        13.19,
+        15.45,
+        15.4
+      ]
+    },
+    "GET /model/info  \u2014 model structure": {
+      "status_code": 200,
+      "elapsed_ms": 3.22,
+      "response": {
+        "model": "LightGBM",
+        "n_features": 28,
+        "feature_names": [
+          "hapax_legoman_ratio",
+          "sentence_count",
+          "average_sentence_length",
+          "noun_ratio",
+          "verb_ratio",
+          "adverb_ratio",
+          "first_person_singular_pronoun_frequency",
+          "modal_verb_frequency",
+          "negative_frequency",
+          "parse_tree_depth",
+          "subordinate_clause_ratio",
+          "overall_sentiment_score",
+          "fear_word_frequency",
+          "sadness_word_frequency",
+          "anger_word_frequency",
+          "max_negative_emotion",
+          "negative_emotion_spike_count",
+          "sentiment_trajectory_slope",
+          "emotional_volatility_score",
+          "absolutist_word_frequency",
+          "catastrophizing_indicators",
+          "external_locus_of_control_score",
+          "uncertainty_word_frequency",
+          "avoidance_language_frequency",
+          "past_focused_word_ratio",
+          "present_focused_word_ratio",
+          "future_focused_word_ratio",
+          "cognitive_load_score"
+        ],
+        "classes": [
+          "ANXIETY",
+          "BIPOLAR",
+          "DEPRESSION",
+          "PHOBIA",
+          "SUICIDAL_TENDENCY"
+        ],
+        "scaler": "RobustScaler"
+      }
+    }
+  }
+}
