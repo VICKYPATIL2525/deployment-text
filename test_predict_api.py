@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
-HOST    = os.environ.get("MINDSPACE_TEXT_HOST", "http://127.0.0.1:9000")
+HOST    = os.environ.get("MINDSPACE_TEXT_HOST", "http://127.0.0.1:5500")
 API_KEY = os.environ.get("MINDSPACE_TEXT_API_KEY", "")
 
 # ── Repeat control ────────────────────────────────────────────────────────────

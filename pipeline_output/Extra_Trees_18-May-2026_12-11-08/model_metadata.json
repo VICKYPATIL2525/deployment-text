@@ -1,0 +1,60 @@
+{
+  "best_model_name": "Extra Trees",
+  "best_params": {
+    "n_estimators": 113,
+    "max_depth": 28,
+    "min_samples_split": 6,
+    "min_samples_leaf": 7,
+    "max_features": null
+  },
+  "cv_score": 0.993,
+  "cv_scoring": "f1_macro",
+  "test_metrics": {
+    "accuracy": 0.9915,
+    "f1_macro": 0.9915,
+    "f1_weighted": 0.9915,
+    "precision_macro": 0.9915,
+    "recall_macro": 0.9915,
+    "precision_weighted": 0.9915,
+    "recall_weighted": 0.9915
+  },
+  "task_type": "classification",
+  "n_features": 20,
+  "feature_names": [
+    "unique_word_count",
+    "moving_average_ttr",
+    "adverb_ratio",
+    "modal_verb_frequency",
+    "negative_frequency",
+    "overall_sentiment_score",
+    "fear_word_frequency",
+    "sadness_word_frequency",
+    "anger_word_frequency",
+    "surprise_frequency",
+    "max_negative_emotion",
+    "negative_emotion_spike_count",
+    "sentiment_trajectory_slope",
+    "emotional_volatility_score",
+    "catastrophizing_indicators",
+    "external_locus_of_control_score",
+    "self_reference_density",
+    "past_focused_word_ratio",
+    "future_focused_word_ratio",
+    "filler_word_frequency"
+  ],
+  "class_names": [
+    "ANXIETY",
+    "BIPOLAR",
+    "DEPRESSION",
+    "NORMAL",
+    "STRESS",
+    "SUICIDAL"
+  ],
+  "scaler": "RobustScaler",
+  "n_training_samples": 8001,
+  "n_test_samples": 2001,
+  "random_seed": 42,
+  "balance_strategy": "none",
+  "used_sample_weight": false,
+  "saved_at": "18-05-2026 12:11:08"
+}

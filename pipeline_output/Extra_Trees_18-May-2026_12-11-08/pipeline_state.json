@@ -1,0 +1,1151 @@
+{
+  "data_loading": {
+    "rows": 10002,
+    "cols": 53,
+    "dtypes": {
+      "float64": 47,
+      "int64": 5,
+      "object": 1
+    },
+    "file": "data/TEXT.csv"
+  },
+  "target": {
+    "column": "mental_health_label",
+    "task_type": "classification",
+    "n_unique": 6,
+    "class_names": [
+      "ANXIETY",
+      "BIPOLAR",
+      "DEPRESSION",
+      "NORMAL",
+      "STRESS",
+      "SUICIDAL"
+    ]
+  },
+  "profiling": {
+    "null_columns": {},
+    "duplicates": 0,
+    "constant_cols": [],
+    "id_cols": [],
+    "high_cardinality": [],
+    "flagged_for_removal": [],
+    "drop_reasons": {}
+  },
+  "auto_clean": {
+    "columns_dropped": [],
+    "imputed_columns": [],
+    "final_shape": [
+      10002,
+      53
+    ]
+  },
+  "target_analysis": {
+    "task_type": "classification",
+    "balance_strategy": "none",
+    "n_classes": 6,
+    "imbalance_ratio": 1.0,
+    "class_names": [
+      "ANXIETY",
+      "BIPOLAR",
+      "DEPRESSION",
+      "NORMAL",
+      "STRESS",
+      "SUICIDAL"
+    ],
+    "train_size": 8001,
+    "test_size": 2001
+  },
+  "outlier_handling": {
+    "total_columns_with_outliers": 29,
+    "transformations": {
+      "unique_word_count": "yeo-johnson",
+      "moving_average_ttr": "yeo-johnson",
+      "hapax_legoman_ratio": "yeo-johnson",
+      "average_sentence_length": "yeo-johnson",
+      "noun_ratio": "yeo-johnson",
+      "verb_ratio": "winsorize",
+      "adjective_ratio": "yeo-johnson",
+      "adverb_ratio": "yeo-johnson",
+      "first_person_singular_pronoun_frequency": "winsorize",
+      "modal_verb_frequency": "yeo-johnson",
+      "negative_frequency": "yeo-johnson",
+      "parse_tree_depth": "yeo-johnson",
+      "avg_dependency_length": "yeo-johnson",
+      "subordinate_clause_ratio": "yeo-johnson",
+      "disgust_frequency": "yeo-johnson",
+      "surprise_frequency": "winsorize",
+      "emotional_intensity_ratio": "winsorize",
+      "max_negative_emotion": "yeo-johnson",
+      "negative_emotion_spike_count": "yeo-johnson",
+      "sentiment_variance": "yeo-johnson",
+      "sentiment_trajectory_slope": "yeo-johnson",
+      "max_sentence_similarity": "yeo-johnson",
+      "external_locus_of_control_score": "yeo-johnson",
+      "uncertainty_word_frequency": "yeo-johnson",
+      "threat_anticipation_language": "yeo-johnson",
+      "self_reference_density": "yeo-johnson",
+      "present_focused_word_ratio": "yeo-johnson",
+      "future_focused_word_ratio": "yeo-johnson",
+      "filler_word_frequency": "yeo-johnson"
+    },
+    "details": {
+      "unique_word_count": {
+        "n_outliers": 46,
+        "outlier_pct": 0.57,
+        "original_skewness": 0.8522,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0029,
+        "candidates_tested": {
+          "winsorize": 0.84,
+          "log1p": 0.0168,
+          "sqrt": 0.4337,
+          "yeo-johnson": 0.0029
+        }
+      },
+      "moving_average_ttr": {
+        "n_outliers": 60,
+        "outlier_pct": 0.75,
+        "original_skewness": -0.0247,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0001,
+        "candidates_tested": {
+          "winsorize": 0.0201,
+          "log1p": 0.2107,
+          "sqrt": 0.272,
+          "yeo-johnson": 0.0001
+        }
+      },
+      "hapax_legoman_ratio": {
+        "n_outliers": 70,
+        "outlier_pct": 0.87,
+        "original_skewness": 0.0003,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0019,
+        "candidates_tested": {
+          "winsorize": 0.0046,
+          "log1p": 0.1964,
+          "sqrt": 0.5526,
+          "yeo-johnson": 0.0019
+        }
+      },
+      "average_sentence_length": {
+        "n_outliers": 41,
+        "outlier_pct": 0.51,
+        "original_skewness": 0.0536,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0067,
+        "candidates_tested": {
+          "winsorize": 0.0439,
+          "log1p": 0.7591,
+          "sqrt": 0.3566,
+          "yeo-johnson": 0.0067
+        }
+      },
+      "noun_ratio": {
+        "n_outliers": 46,
+        "outlier_pct": 0.57,
+        "original_skewness": 0.0573,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0002,
+        "candidates_tested": {
+          "winsorize": 0.0403,
+          "log1p": 0.0184,
+          "sqrt": 0.2532,
+          "yeo-johnson": 0.0002
+        }
+      },
+      "verb_ratio": {
+        "n_outliers": 53,
+        "outlier_pct": 0.66,
+        "original_skewness": -0.0004,
+        "strategy_applied": "winsorize",
+        "new_skewness": 0.0006,
+        "candidates_tested": {
+          "winsorize": 0.0006,
+          "log1p": 0.078,
+          "sqrt": 0.4264,
+          "yeo-johnson": 0.0007
+        }
+      },
+      "adjective_ratio": {
+        "n_outliers": 26,
+        "outlier_pct": 0.32,
+        "original_skewness": 0.0241,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0004,
+        "candidates_tested": {
+          "winsorize": 0.0083,
+          "log1p": 0.0298,
+          "sqrt": 1.0152,
+          "yeo-johnson": 0.0004
+        }
+      },
+      "adverb_ratio": {
+        "n_outliers": 25,
+        "outlier_pct": 0.31,
+        "original_skewness": 0.0017,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0009,
+        "candidates_tested": {
+          "winsorize": 0.0193,
+          "log1p": 0.0508,
+          "sqrt": 0.9919,
+          "yeo-johnson": 0.0009
+        }
+      },
+      "first_person_singular_pronoun_frequency": {
+        "n_outliers": 56,
+        "outlier_pct": 0.7,
+        "original_skewness": 0.0097,
+        "strategy_applied": "winsorize",
+        "new_skewness": 0.0,
+        "candidates_tested": {
+          "winsorize": 0.0,
+          "log1p": 0.0189,
+          "sqrt": 0.7703,
+          "yeo-johnson": 0.0001
+        }
+      },
+      "modal_verb_frequency": {
+        "n_outliers": 34,
+        "outlier_pct": 0.42,
+        "original_skewness": 0.1431,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0047,
+        "candidates_tested": {
+          "winsorize": 0.1166,
+          "log1p": 0.1303,
+          "sqrt": 0.9996,
+          "yeo-johnson": 0.0047
+        }
+      },
+      "negative_frequency": {
+        "n_outliers": 55,
+        "outlier_pct": 0.69,
+        "original_skewness": -0.0177,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0004,
+        "candidates_tested": {
+          "winsorize": 0.0261,
+          "log1p": 0.0458,
+          "sqrt": 0.806,
+          "yeo-johnson": 0.0004
+        }
+      },
+      "parse_tree_depth": {
+        "n_outliers": 65,
+        "outlier_pct": 0.81,
+        "original_skewness": 0.0284,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0007,
+        "candidates_tested": {
+          "winsorize": 0.0226,
+          "log1p": 0.3693,
+          "sqrt": 0.2382,
+          "yeo-johnson": 0.0007
+        }
+      },
+      "avg_dependency_length": {
+        "n_outliers": 56,
+        "outlier_pct": 0.7,
+        "original_skewness": 0.0533,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0002,
+        "candidates_tested": {
+          "winsorize": 0.033,
+          "log1p": 0.3388,
+          "sqrt": 0.2103,
+          "yeo-johnson": 0.0002
+        }
+      },
+      "subordinate_clause_ratio": {
+        "n_outliers": 58,
+        "outlier_pct": 0.72,
+        "original_skewness": 0.0072,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0001,
+        "candidates_tested": {
+          "winsorize": 0.0016,
+          "log1p": 0.1787,
+          "sqrt": 0.5218,
+          "yeo-johnson": 0.0001
+        }
+      },
+      "disgust_frequency": {
+        "n_outliers": 1,
+        "outlier_pct": 0.01,
+        "original_skewness": 0.2863,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0098,
+        "candidates_tested": {
+          "winsorize": 0.286,
+          "log1p": 0.0616,
+          "sqrt": 0.5465,
+          "yeo-johnson": 0.0098
+        }
+      },
+      "surprise_frequency": {
+        "n_outliers": 16,
+        "outlier_pct": 0.2,
+        "original_skewness": 0.0145,
+        "strategy_applied": "winsorize",
+        "new_skewness": 0.0008,
+        "candidates_tested": {
+          "winsorize": 0.0008,
+          "log1p": 0.1624,
+          "sqrt": 0.9105,
+          "yeo-johnson": 0.0044
+        }
+      },
+      "emotional_intensity_ratio": {
+        "n_outliers": 1379,
+        "outlier_pct": 17.24,
+        "original_skewness": -1.8667,
+        "strategy_applied": "winsorize",
+        "new_skewness": NaN,
+        "candidates_tested": {
+          "winsorize": NaN,
+          "log1p": 1.9091,
+          "sqrt": 1.9431,
+          "yeo-johnson": 1.7646
+        }
+      },
+      "max_negative_emotion": {
+        "n_outliers": 938,
+        "outlier_pct": 11.72,
+        "original_skewness": -1.0567,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.3298,
+        "candidates_tested": {
+          "winsorize": 0.9932,
+          "log1p": 1.2566,
+          "sqrt": 1.3682,
+          "yeo-johnson": 0.3298
+        }
+      },
+      "negative_emotion_spike_count": {
+        "n_outliers": 19,
+        "outlier_pct": 0.24,
+        "original_skewness": 0.5512,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.008,
+        "candidates_tested": {
+          "winsorize": 0.5029,
+          "log1p": 0.7984,
+          "sqrt": 0.4375,
+          "yeo-johnson": 0.008
+        }
+      },
+      "sentiment_variance": {
+        "n_outliers": 16,
+        "outlier_pct": 0.2,
+        "original_skewness": 0.4253,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0429,
+        "candidates_tested": {
+          "winsorize": 0.4053,
+          "log1p": 0.3535,
+          "sqrt": 0.1968,
+          "yeo-johnson": 0.0429
+        }
+      },
+      "sentiment_trajectory_slope": {
+        "n_outliers": 61,
+        "outlier_pct": 0.76,
+        "original_skewness": 0.0048,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0001,
+        "candidates_tested": {
+          "winsorize": 0.0055,
+          "yeo-johnson": 0.0001
+        }
+      },
+      "max_sentence_similarity": {
+        "n_outliers": 19,
+        "outlier_pct": 0.24,
+        "original_skewness": -0.0693,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0083,
+        "candidates_tested": {
+          "winsorize": 0.0508,
+          "log1p": 0.2121,
+          "sqrt": 0.2353,
+          "yeo-johnson": 0.0083
+        }
+      },
+      "external_locus_of_control_score": {
+        "n_outliers": 5,
+        "outlier_pct": 0.06,
+        "original_skewness": 0.2866,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0135,
+        "candidates_tested": {
+          "winsorize": 0.2844,
+          "log1p": 0.0829,
+          "sqrt": 0.6751,
+          "yeo-johnson": 0.0135
+        }
+      },
+      "uncertainty_word_frequency": {
+        "n_outliers": 3,
+        "outlier_pct": 0.04,
+        "original_skewness": 0.1112,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0147,
+        "candidates_tested": {
+          "winsorize": 0.1086,
+          "log1p": 0.137,
+          "sqrt": 0.8943,
+          "yeo-johnson": 0.0147
+        }
+      },
+      "threat_anticipation_language": {
+        "n_outliers": 1,
+        "outlier_pct": 0.01,
+        "original_skewness": 0.0676,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.024,
+        "candidates_tested": {
+          "winsorize": 0.0672,
+          "log1p": 0.1904,
+          "sqrt": 0.8731,
+          "yeo-johnson": 0.024
+        }
+      },
+      "self_reference_density": {
+        "n_outliers": 30,
+        "outlier_pct": 0.37,
+        "original_skewness": 0.0643,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0001,
+        "candidates_tested": {
+          "winsorize": 0.0386,
+          "log1p": 0.0102,
+          "sqrt": 0.9631,
+          "yeo-johnson": 0.0001
+        }
+      },
+      "present_focused_word_ratio": {
+        "n_outliers": 65,
+        "outlier_pct": 0.81,
+        "original_skewness": -0.0225,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0006,
+        "candidates_tested": {
+          "winsorize": 0.0162,
+          "log1p": 0.2253,
+          "sqrt": 0.3554,
+          "yeo-johnson": 0.0006
+        }
+      },
+      "future_focused_word_ratio": {
+        "n_outliers": 5,
+        "outlier_pct": 0.06,
+        "original_skewness": 0.3586,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0387,
+        "candidates_tested": {
+          "winsorize": 0.3552,
+          "log1p": 0.2036,
+          "sqrt": 0.5549,
+          "yeo-johnson": 0.0387
+        }
+      },
+      "filler_word_frequency": {
+        "n_outliers": 27,
+        "outlier_pct": 0.34,
+        "original_skewness": 0.0032,
+        "strategy_applied": "yeo-johnson",
+        "new_skewness": 0.0007,
+        "candidates_tested": {
+          "winsorize": 0.012,
+          "log1p": 0.0492,
+          "sqrt": 1.0143,
+          "yeo-johnson": 0.0007
+        }
+      }
+    }
+  },
+  "feature_handling": {
+    "original_numeric": 52,
+    "original_categorical": 0,
+    "encodings": {},
+    "final_feature_count": 52
+  },
+  "levene_test": {
+    "features_with_unequal_variance": 28,
+    "total_tested": 52,
+    "top_10": [
+      [
+        "overall_sentiment_score",
+        958.3464
+      ],
+      [
+        "negative_emotion_word_ratio",
+        957.6517
+      ],
+      [
+        "positive_emotion_word_ratio",
+        854.6126
+      ],
+      [
+        "sadness_word_frequency",
+        543.2623
+      ],
+      [
+        "emotional_intensity_ratio",
+        NaN
+      ],
+      [
+        "max_negative_emotion",
+        594.0326
+      ],
+      [
+        "semantic_coherence_score",
+        359.3321
+      ],
+      [
+        "joy_frequency",
+        342.9884
+      ],
+      [
+        "anger_word_frequency",
+        304.0032
+      ],
+      [
+        "fear_word_frequency",
+        303.7253
+      ]
+    ]
+  },
+  "eda": {
+    "n_features_analyzed": 52,
+    "n_pages_plotted": 5,
+    "significant_features_kruskal": 29,
+    "high_corr_pairs_count": 25,
+    "levene_features_unequal_var": 28,
+    "skewness": {
+      "total_word_count": {
+        "skewness": 0.0023,
+        "kurtosis": -1.2094
+      },
+      "unique_word_count": {
+        "skewness": 0.0029,
+        "kurtosis": -0.9789
+      },
+      "type_token_ratio_ttr": {
+        "skewness": -0.1383,
+        "kurtosis": -1.088
+      },
+      "moving_average_ttr": {
+        "skewness": 0.0001,
+        "kurtosis": 0.0037
+      },
+      "hapax_legoman_ratio": {
+        "skewness": 0.0019,
+        "kurtosis": 0.0874
+      },
+      "sentence_count": {
+        "skewness": 0.0201,
+        "kurtosis": -1.2095
+      },
+      "average_sentence_length": {
+        "skewness": -0.0067,
+        "kurtosis": -0.0893
+      },
+      "repetition_rate": {
+        "skewness": 0.1383,
+        "kurtosis": -1.088
+      },
+      "noun_ratio": {
+        "skewness": -0.0002,
+        "kurtosis": -0.0766
+      },
+      "verb_ratio": {
+        "skewness": -0.0006,
+        "kurtosis": -0.1802
+      },
+      "adjective_ratio": {
+        "skewness": -0.0004,
+        "kurtosis": -0.1054
+      },
+      "adverb_ratio": {
+        "skewness": -0.0009,
+        "kurtosis": -0.139
+      },
+      "first_person_singular_pronoun_frequency": {
+        "skewness": -0.0,
+        "kurtosis": -0.1542
+      },
+      "modal_verb_frequency": {
+        "skewness": 0.0047,
+        "kurtosis": -0.2998
+      },
+      "negative_frequency": {
+        "skewness": -0.0004,
+        "kurtosis": -0.0763
+      },
+      "parse_tree_depth": {
+        "skewness": 0.0007,
+        "kurtosis": 0.0144
+      },
+      "avg_dependency_length": {
+        "skewness": 0.0002,
+        "kurtosis": 0.0137
+      },
+      "clause_count": {
+        "skewness": 0.0043,
+        "kurtosis": -1.1963
+      },
+      "subordinate_clause_ratio": {
+        "skewness": -0.0001,
+        "kurtosis": -0.0045
+      },
+      "positive_emotion_word_ratio": {
+        "skewness": 0.7455,
+        "kurtosis": -0.7818
+      },
+      "negative_emotion_word_ratio": {
+        "skewness": -0.6068,
+        "kurtosis": -0.9663
+      },
+      "overall_sentiment_score": {
+        "skewness": 0.4878,
+        "kurtosis": -0.8094
+      },
+      "fear_word_frequency": {
+        "skewness": 0.0026,
+        "kurtosis": -0.9137
+      },
+      "sadness_word_frequency": {
+        "skewness": 0.0459,
+        "kurtosis": -1.3092
+      },
+      "anger_word_frequency": {
+        "skewness": 0.2914,
+        "kurtosis": -0.8348
+      },
+      "joy_frequency": {
+        "skewness": -0.0209,
+        "kurtosis": -1.2559
+      },
+      "disgust_frequency": {
+        "skewness": 0.0098,
+        "kurtosis": -0.9236
+      },
+      "surprise_frequency": {
+        "skewness": -0.0008,
+        "kurtosis": -0.2651
+      },
+      "emotional_intensity_ratio": {
+        "skewness": NaN,
+        "kurtosis": NaN
+      },
+      "max_negative_emotion": {
+        "skewness": -0.3298,
+        "kurtosis": -0.904
+      },
+      "negative_emotion_spike_count": {
+        "skewness": -0.008,
+        "kurtosis": -0.0809
+      },
+      "sentiment_variance": {
+        "skewness": 0.0429,
+        "kurtosis": -0.8153
+      },
+      "sentiment_trajectory_slope": {
+        "skewness": -0.0001,
+        "kurtosis": 0.0526
+      },
+      "emotional_volatility_score": {
+        "skewness": -0.0983,
+        "kurtosis": -1.0583
+      },
+      "semantic_coherence_score": {
+        "skewness": 0.3573,
+        "kurtosis": -1.0042
+      },
+      "topic_shift_frequency": {
+        "skewness": 0.0033,
+        "kurtosis": -0.7758
+      },
+      "max_sentence_similarity": {
+        "skewness": -0.0083,
+        "kurtosis": -0.3329
+      },
+      "first_last_sentence_similarity": {
+        "skewness": 0.45,
+        "kurtosis": -0.8148
+      },
+      "absolutist_word_frequency": {
+        "skewness": 0.2088,
+        "kurtosis": -0.8758
+      },
+      "helplessness_phrase_frequency": {
+        "skewness": 0.2793,
+        "kurtosis": -1.0183
+      },
+      "catastrophizing_indicators": {
+        "skewness": -0.4285,
+        "kurtosis": -0.4765
+      },
+      "external_locus_of_control_score": {
+        "skewness": 0.0135,
+        "kurtosis": -0.9435
+      },
+      "rumination_phrase_frequency": {
+        "skewness": -0.1512,
+        "kurtosis": -0.8565
+      },
+      "uncertainty_word_frequency": {
+        "skewness": -0.0147,
+        "kurtosis": -0.6876
+      },
+      "avoidance_language_frequency": {
+        "skewness": -0.2822,
+        "kurtosis": -0.5218
+      },
+      "threat_anticipation_language": {
+        "skewness": -0.024,
+        "kurtosis": -0.7724
+      },
+      "self_reference_density": {
+        "skewness": 0.0001,
+        "kurtosis": -0.0946
+      },
+      "past_focused_word_ratio": {
+        "skewness": 0.22,
+        "kurtosis": -0.8465
+      },
+      "present_focused_word_ratio": {
+        "skewness": -0.0006,
+        "kurtosis": -0.024
+      },
+      "future_focused_word_ratio": {
+        "skewness": 0.0387,
+        "kurtosis": -1.0649
+      },
+      "filler_word_frequency": {
+        "skewness": -0.0007,
+        "kurtosis": -0.1241
+      },
+      "cognitive_load_score": {
+        "skewness": -0.3377,
+        "kurtosis": -0.6439
+      }
+    }
+  },
+  "vif_removal": {
+    "features_removed": [
+      [
+        "emotional_intensity_ratio",
+        371.5
+      ],
+      [
+        "type_token_ratio_ttr",
+        24.7
+      ],
+      [
+        "avoidance_language_frequency",
+        21.8
+      ],
+      [
+        "verb_ratio",
+        14.3
+      ],
+      [
+        "absolutist_word_frequency",
+        11.7
+      ],
+      [
+        "total_word_count",
+        10.5
+      ]
+    ],
+    "features_remaining": 32,
+    "protected_features": [
+      "adjective_ratio",
+      "emotional_volatility_score",
+      "max_negative_emotion",
+      "catastrophizing_indicators",
+      "fear_word_frequency",
+      "past_focused_word_ratio",
+      "sadness_word_frequency",
+      "overall_sentiment_score",
+      "anger_word_frequency"
+    ]
+  },
+  "feature_selection": {
+    "initial_features": 52,
+    "removed_correlation": [
+      "disgust_frequency",
+      "negative_emotion_word_ratio",
+      "semantic_coherence_score",
+      "threat_anticipation_language",
+      "uncertainty_word_frequency",
+      "repetition_rate",
+      "positive_emotion_word_ratio",
+      "topic_shift_frequency",
+      "joy_frequency",
+      "first_last_sentence_similarity",
+      "rumination_phrase_frequency",
+      "cognitive_load_score",
+      "helplessness_phrase_frequency",
+      "sentiment_variance"
+    ],
+    "consensus_top_20": [
+      [
+        "overall_sentiment_score",
+        2.0
+      ],
+      [
+        "emotional_volatility_score",
+        2.75
+      ],
+      [
+        "sadness_word_frequency",
+        3.0
+      ],
+      [
+        "max_negative_emotion",
+        3.5
+      ],
+      [
+        "fear_word_frequency",
+        4.75
+      ],
+      [
+        "anger_word_frequency",
+        5.0
+      ],
+      [
+        "catastrophizing_indicators",
+        7.5
+      ],
+      [
+        "past_focused_word_ratio",
+        8.0
+      ],
+      [
+        "future_focused_word_ratio",
+        11.25
+      ],
+      [
+        "external_locus_of_control_score",
+        12.0
+      ],
+      [
+        "modal_verb_frequency",
+        16.0
+      ],
+      [
+        "negative_emotion_spike_count",
+        16.5
+      ],
+      [
+        "moving_average_ttr",
+        18.0
+      ],
+      [
+        "adjective_ratio",
+        18.25
+      ],
+      [
+        "adverb_ratio",
+        18.25
+      ],
+      [
+        "unique_word_count",
+        19.25
+      ],
+      [
+        "surprise_frequency",
+        19.75
+      ],
+      [
+        "first_person_singular_pronoun_frequency",
+        20.75
+      ],
+      [
+        "noun_ratio",
+        21.0
+      ],
+      [
+        "clause_count",
+        21.25
+      ]
+    ],
+    "features_kept": [
+      "unique_word_count",
+      "moving_average_ttr",
+      "adverb_ratio",
+      "modal_verb_frequency",
+      "negative_frequency",
+      "overall_sentiment_score",
+      "fear_word_frequency",
+      "sadness_word_frequency",
+      "anger_word_frequency",
+      "surprise_frequency",
+      "max_negative_emotion",
+      "negative_emotion_spike_count",
+      "sentiment_trajectory_slope",
+      "emotional_volatility_score",
+      "catastrophizing_indicators",
+      "external_locus_of_control_score",
+      "self_reference_density",
+      "past_focused_word_ratio",
+      "future_focused_word_ratio",
+      "filler_word_frequency"
+    ],
+    "features_dropped": [
+      "hapax_legoman_ratio",
+      "sentence_count",
+      "average_sentence_length",
+      "noun_ratio",
+      "adjective_ratio",
+      "first_person_singular_pronoun_frequency",
+      "parse_tree_depth",
+      "avg_dependency_length",
+      "clause_count",
+      "subordinate_clause_ratio",
+      "max_sentence_similarity",
+      "present_focused_word_ratio"
+    ],
+    "prune_method": "Conservative: MI=0 AND Kruskal p>0.05 (both required to drop)",
+    "final_count": 20,
+    "importance_method": "XGBoost [GPU]"
+  },
+  "preprocessing": {
+    "n_features": 20,
+    "feature_names": [
+      "unique_word_count",
+      "moving_average_ttr",
+      "adverb_ratio",
+      "modal_verb_frequency",
+      "negative_frequency",
+      "overall_sentiment_score",
+      "fear_word_frequency",
+      "sadness_word_frequency",
+      "anger_word_frequency",
+      "surprise_frequency",
+      "max_negative_emotion",
+      "negative_emotion_spike_count",
+      "sentiment_trajectory_slope",
+      "emotional_volatility_score",
+      "catastrophizing_indicators",
+      "external_locus_of_control_score",
+      "self_reference_density",
+      "past_focused_word_ratio",
+      "future_focused_word_ratio",
+      "filler_word_frequency"
+    ],
+    "train_size": 8001,
+    "test_size": 2001,
+    "scaler": "RobustScaler",
+    "class_names": [
+      "ANXIETY",
+      "BIPOLAR",
+      "DEPRESSION",
+      "NORMAL",
+      "STRESS",
+      "SUICIDAL"
+    ]
+  },
+  "model_shortlist": {
+    "n_candidates": 8,
+    "models": [
+      "Random Forest",
+      "LightGBM",
+      "Extra Trees",
+      "XGBoost",
+      "HistGradientBoosting",
+      "Logistic Regression",
+      "SVM (RBF)",
+      "KNN"
+    ],
+    "reasons": {
+      "Random Forest": "Always included \u2014 robust, handles mixed features",
+      "LightGBM": "Always included \u2014 fast, state-of-the-art [GPU]",
+      "Extra Trees": "Always included \u2014 more randomized variant of RF",
+      "XGBoost": "Included \u2014 dataset size (8,001) manageable [GPU]",
+      "HistGradientBoosting": "Included \u2014 histogram-based GB, native parallel (8 cores), replaces slow GradientBoosting",
+      "Logistic Regression": "Included \u2014 20 features, 8,001 samples, linear baseline feasible",
+      "SVM (RBF)": "Included \u2014 20 features, 8,001 samples, SVM feasible",
+      "KNN": "Included \u2014 dataset size (8,001) manageable for KNN"
+    },
+    "models_with_sample_weight": [],
+    "gpu_used": true,
+    "cpu_cores": 8
+  },
+  "model_training": {
+    "cv_folds": 5,
+    "scoring": "f1_macro",
+    "results": {
+      "Random Forest": {
+        "mean_score": 0.992,
+        "std_score": 0.0011,
+        "scores": [
+          0.9906,
+          0.9925,
+          0.9919,
+          0.9938,
+          0.9912
+        ],
+        "time_seconds": 31.27,
+        "used_sample_weight": false
+      },
+      "LightGBM": {
+        "mean_score": 0.9918,
+        "std_score": 0.0009,
+        "scores": [
+          0.9906,
+          0.9913,
+          0.9925,
+          0.9931,
+          0.9913
+        ],
+        "time_seconds": 46.13,
+        "used_sample_weight": false
+      },
+      "Extra Trees": {
+        "mean_score": 0.9923,
+        "std_score": 0.0006,
+        "scores": [
+          0.9925,
+          0.9919,
+          0.9931,
+          0.9913,
+          0.9925
+        ],
+        "time_seconds": 23.25,
+        "used_sample_weight": false
+      },
+      "XGBoost": {
+        "mean_score": 0.9919,
+        "std_score": 0.0008,
+        "scores": [
+          0.9906,
+          0.9913,
+          0.9925,
+          0.9925,
+          0.9925
+        ],
+        "time_seconds": 8.55,
+        "used_sample_weight": false
+      },
+      "HistGradientBoosting": {
+        "mean_score": 0.9913,
+        "std_score": 0.0009,
+        "scores": [
+          0.99,
+          0.9919,
+          0.9913,
+          0.9925,
+          0.9906
+        ],
+        "time_seconds": 7.62,
+        "used_sample_weight": false
+      },
+      "Logistic Regression": {
+        "mean_score": 0.9911,
+        "std_score": 0.0019,
+        "scores": [
+          0.9944,
+          0.9887,
+          0.9913,
+          0.9913,
+          0.99
+        ],
+        "time_seconds": 0.34,
+        "used_sample_weight": false
+      },
+      "SVM (RBF)": {
+        "mean_score": 0.9889,
+        "std_score": 0.0011,
+        "scores": [
+          0.9906,
+          0.9875,
+          0.9894,
+          0.9888,
+          0.9881
+        ],
+        "time_seconds": 4.06,
+        "used_sample_weight": false
+      },
+      "KNN": {
+        "mean_score": 0.9334,
+        "std_score": 0.0101,
+        "scores": [
+          0.9354,
+          0.9288,
+          0.9448,
+          0.9164,
+          0.9416
+        ],
+        "time_seconds": 0.53,
+        "used_sample_weight": false
+      }
+    },
+    "ranking": [
+      "Extra Trees",
+      "Random Forest",
+      "XGBoost",
+      "LightGBM",
+      "HistGradientBoosting",
+      "Logistic Regression",
+      "SVM (RBF)",
+      "KNN"
+    ]
+  },
+  "top_k_selection": {
+    "top_k": 2,
+    "selected": [
+      "Extra Trees",
+      "Random Forest"
+    ]
+  },
+  "hyperparameter_tuning": {
+    "Extra Trees": {
+      "best_score": 0.993,
+      "best_params": {
+        "n_estimators": 113,
+        "max_depth": 28,
+        "min_samples_split": 6,
+        "min_samples_leaf": 7,
+        "max_features": null
+      },
+      "default_score": 0.9923,
+      "improvement": 0.0007,
+      "n_trials_completed": 15,
+      "time_seconds": 40.3,
+      "used_sample_weight": false
+    },
+    "Random Forest": {
+      "best_score": 0.992,
+      "best_params": {
+        "n_estimators": 447,
+        "max_depth": 19,
+        "min_samples_split": 15,
+        "min_samples_leaf": 1,
+        "max_features": "sqrt"
+      },
+      "default_score": 0.992,
+      "improvement": -0.0,
+      "n_trials_completed": 15,
+      "time_seconds": 166.6,
+      "used_sample_weight": false
+    }
+  },
+  "final_evaluation": {
+    "best_model": "Extra Trees",
+    "metrics": {
+      "accuracy": 0.9915,
+      "f1_macro": 0.9915,
+      "f1_weighted": 0.9915,
+      "precision_macro": 0.9915,
+      "recall_macro": 0.9915,
+      "precision_weighted": 0.9915,
+      "recall_weighted": 0.9915
+    }
+  }
+}
