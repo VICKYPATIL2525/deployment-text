@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 
@@ -16,6 +16,6 @@ COPY demo-api-input-data-sample/ demo-api-input-data-sample/
 RUN adduser --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
 
-EXPOSE 9000
+EXPOSE 5500
 
-CMD ["gunicorn", "main:app", "-k", "uvicorn.workers.UvicornWorker", "--workers", "4", "--bind", "0.0.0.0:9000", "--timeout", "120"]
+CMD ["gunicorn", "main:app", "-k", "uvicorn.workers.UvicornWorker", "--workers", "4", "--bind", "0.0.0.0:5500", "--timeout", "120"]
