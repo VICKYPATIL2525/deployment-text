@@ -40,7 +40,7 @@ from contextlib import asynccontextmanager
 from typing import Any
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Request, Security
+from fastapi import FastAPI, HTTPException, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security.api_key import APIKeyHeader
@@ -78,7 +78,6 @@ def verify_api_key(key: str = Security(_api_key_header)) -> None:
 ARTIFACTS_DIR = Path(__file__).parent / "pipeline_output" / "Extra_Trees_18-May-2026_12-11-08"
 
 artifacts: dict = {}
-PredictRequest: type[BaseModel] | None = None  # built dynamically after artifacts load
 
 
 def build_predict_request_model(feature_names: list[str]) -> type[BaseModel]:
@@ -100,18 +99,20 @@ def build_predict_request_model(feature_names: list[str]) -> type[BaseModel]:
     return create_model("PredictRequest", **field_definitions, __validators__=validators)
 
 
+# Build the request model at module level so Swagger UI shows the schema
+_feature_names_file = ARTIFACTS_DIR / "feature_names.json"
+PredictRequest = build_predict_request_model(json.loads(_feature_names_file.read_text()))
+
+
 def load_artifacts() -> None:
     """
-    Load all model artifacts from ``ARTIFACTS_DIR`` into the global ``artifacts`` dict,
-    then build the dynamic ``PredictRequest`` schema from the loaded feature names.
+    Load all model artifacts from ``ARTIFACTS_DIR`` into the global ``artifacts`` dict.
 
     Raises
     ------
     Any exception raised by ``joblib.load`` or file I/O is intentionally
     propagated so the caller (``lifespan``) can abort startup.
     """
-    global PredictRequest
-
     logger.info("Loading model artifacts from %s", ARTIFACTS_DIR)
     artifacts["model"]                = joblib.load(ARTIFACTS_DIR / "best_model.joblib")
     artifacts["scaler"]               = joblib.load(ARTIFACTS_DIR / "scaler.joblib")
@@ -120,8 +121,6 @@ def load_artifacts() -> None:
     artifacts["outlier_transformers"] = joblib.load(ARTIFACTS_DIR / "outlier_transformers.joblib")
     artifacts["feature_names"]        = json.loads((ARTIFACTS_DIR / "feature_names.json").read_text())
     artifacts["metadata"]             = json.loads((ARTIFACTS_DIR / "model_metadata.json").read_text())
-
-    PredictRequest = build_predict_request_model(artifacts["feature_names"])
 
     logger.info("All artifacts loaded — model: %s, features: %d, classes: %s",
                 artifacts["metadata"].get("best_model_name"),
@@ -237,7 +236,7 @@ def health():
 
 
 @app.post("/predict", response_model=PredictResponse)
-async def predict(request: Request, _: None = Security(verify_api_key)):
+async def predict(body: PredictRequest, _: None = Security(verify_api_key)):  # type: ignore[valid-type]
     """
     Predict the mental health profile for a single text / speech sample.
 
@@ -245,11 +244,7 @@ async def predict(request: Request, _: None = Security(verify_api_key)):
     loaded model (auto-discovered from feature_names.json at startup).
     """
     try:
-        if PredictRequest is None:
-            raise RuntimeError("Model not loaded yet.")
-        body = await request.json()
-        validated = PredictRequest(**body)
-        raw = validated.model_dump()
+        raw = body.model_dump()
         X = preprocess(raw)
     except Exception as e:
         logger.error("Preprocessing failed — %s\n%s", e, traceback.format_exc())
