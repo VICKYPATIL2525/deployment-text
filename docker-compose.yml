@@ -13,11 +13,11 @@ services:
     build: .
     container_name: mindspace-text-api
     ports:
-      - "9000:9000"
+      - "5500:5500"
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:5500/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
