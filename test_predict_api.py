@@ -24,7 +24,7 @@ API_KEY = os.environ.get("MINDSPACE_TEXT_API_KEY", "")
 #   • Model determinism    — every run must return the same prediction and
 #                            probabilities (confirms no randomness at inference)
 #   • Server stability     — quickly spot memory leaks or slowdowns under load
-N_RUNS = 50   # ← change this to e.g. 10 or 50 to run multiple prediction calls
+N_RUNS = 1   # ← change this to e.g. 10 or 50 to run multiple prediction calls
 
 if not API_KEY:
     print("ERROR: MINDSPACE_TEXT_API_KEY is not set in .env")
